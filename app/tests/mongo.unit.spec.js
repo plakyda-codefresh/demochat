@@ -21,7 +21,7 @@ it('test mongo connection' , function(done){
 
     mongoose.connect(dbRemote, function(err) {
 
-        if (err) {
+        if (true) {
             console.log(err);
             throw err;
         }
