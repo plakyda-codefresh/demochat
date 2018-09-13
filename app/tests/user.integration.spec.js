@@ -13,7 +13,7 @@ debug('test file loaded');
 }*/
 //var afterEach = beforeEach;
 describe.skip('user CRUD tests', function(){
-
+  
   var shortId = require('shortid');
   var db = 'mongodb://mongo:27017/hp_mongo';
   debug('models->' + JSON.stringify(models));
@@ -67,6 +67,8 @@ describe.skip('user CRUD tests', function(){
 
 
   it('create user', function(done){
+    
+   assert.fail(true, true, 'Bla bla bla');
 
     console.log('create user test')
     //user.provider = 'github';
