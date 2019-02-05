@@ -1,0 +1,23 @@
+version: '1.0'
+steps:
+
+  build_step:
+    title: 'Building image...'
+    type: build
+    dockerfile: Dockerfile.prod
+    build_arguments:
+        - CF_REVISION=${{CF_REVISION}}
+    image_name: codefresh/cf-uid
+    metadata:
+      set:
+        - CF_QUALITY: true
+
+  push_to_cfcr:
+    title: 'Pushing image to cfcr:'
+    type: push
+    image_name: codefresh/cf-uis
+    registry: CFCR
+    candidate: ${{build_step}}
+    tags:
+    - ${{CF_BRANCH_TAG_NORMALIZED}}
+    - ${{CF_REVISION}}
