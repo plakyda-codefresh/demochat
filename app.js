@@ -1,8 +1,6 @@
 //
 // Let's Chat
 //
-
-
 'use strict';
 
 process.title = 'letschat';
