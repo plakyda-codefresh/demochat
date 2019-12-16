@@ -1,23 +1,35 @@
 version: '1.0'
+stages:
+  - stage1
 steps:
-
-  build_step:
-    title: 'Building image...'
+  build-contracts-and-tests:
     type: build
-    dockerfile: Dockerfile.prod
-    build_arguments:
-        - CF_REVISION=${{CF_REVISION}}
-    image_name: codefresh/cf-uid
-    metadata:
-      set:
-        - CF_QUALITY: true
-
-  push_to_cfcr:
-    title: 'Pushing image to cfcr:'
-    type: push
-    image_name: codefresh/cf-uis
-    registry: CFCR
-    candidate: ${{build_step}}
-    tags:
-    - ${{CF_BRANCH_TAG_NORMALIZED}}
-    - ${{CF_REVISION}}
+    image_name: testimagewwe31
+    tag: test
+    dockerfile:
+      content: |
+       FROM alpine
+       RUN apk add git
+          
+  run_integration_tests:
+      image:  ${{build-contracts-and-tests}}
+      #image: alpine
+      title: "Running integration tests"
+      environment:
+          - CONTRACTS_MONGO_DBNAME=contracts
+          - CONTRACTS_MONGO_URI=mongodb://mongo
+      commands:
+        #- bash -c "sbt -Dfile.encoding=UTF-8 -Dsbt.ivy.home=./.ivy2 -mem 4096 test"
+        - "sleep 10"
+      services:
+        composition:
+          mongo:
+            image: mongo:3.2
+            ports:
+              - 27017
+        setup:
+          image: mongo:3.2
+          commands:
+              - echo in stepup page
+              - sleep 10
+              - echo end setup
