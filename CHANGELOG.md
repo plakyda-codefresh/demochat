@@ -1,8 +1,7 @@
 ## 0.4.5 (2015-12-22)
 
 Fixes
-
-* Issues with NODE_PATH
+jghjgwith NODE_PATH
 * Fr language update
 
 ## 0.4.4 (2015-10-26)
